@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,22 +16,35 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const StateManagementApp(title: 'Random Color App', color: Colors.indigo),
+      home: StateManagementApp(title: 'Random Color App', color: Colors.indigo),
     );
   }
 }
 
 class StateManagementApp extends StatefulWidget {
-  const StateManagementApp({Key? key, required this.title, required this.color}) : super(key: key);
+  StateManagementApp({Key? key, required this.title, required this.color}) : super(key: key);
 
   final String title;
-  final Color color;
+  Color color;
 
   @override
   State<StateManagementApp> createState() => _StateManagementAppState();
 }
 
 class _StateManagementAppState extends State<StateManagementApp> {
+
+  int _red = 0;
+  int _green = 0;
+  int _blue = 0;
+
+  void _changeColor() {
+    _red = Random.secure().nextInt(266);
+    _green = Random.secure().nextInt(266);
+    _blue = Random.secure().nextInt(266);
+    setState(() {
+      widget.color = Color.fromRGBO(_red, _green, _blue, 1);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,11 +62,11 @@ class _StateManagementAppState extends State<StateManagementApp> {
               width: MediaQuery.of(context).size.width * 0.8,
               height: MediaQuery.of(context).size.height * 0.13,
               color: widget.color,
-              child: const Center(
+              child: Center(
                 child: Text(
-                  'R(), G(), B()',
+                  'R(${widget.color.red}), G(${widget.color.green}), B(${widget.color.blue})',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 30,
                     fontWeight: FontWeight.bold
@@ -66,7 +81,7 @@ class _StateManagementAppState extends State<StateManagementApp> {
         tooltip: 'Change color',
         backgroundColor: widget.color,
         child: const Icon(Icons.palette),
-        onPressed: null,
+        onPressed: _changeColor,
 
       ),
     );
