@@ -62,6 +62,13 @@ class _StateManagementAppState extends State<StateManagementApp> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        tooltip: 'Change color',
+        backgroundColor: widget.color,
+        child: const Icon(Icons.palette),
+        onPressed: null,
+
+      ),
     );
   }
 }
